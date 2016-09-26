@@ -21,7 +21,7 @@ NAME=<%=@service_file_name %>
 DAEMON=/usr/sbin/${NAME}
 CONTROL=/usr/sbin/rabbitmqctl
 DESC="message broker"
-USER=<%=@service_user %>
+USER=<%=@rabbitmq_user %>
 ROTATE_SUFFIX=
 INIT_LOG_DIR=/var/log/rabbitmq
 PID_FILE=/var/run/rabbitmq/pid

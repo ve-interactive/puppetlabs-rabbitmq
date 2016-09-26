@@ -14,6 +14,7 @@ class rabbitmq::service(
   $service_ensure = $rabbitmq::service_ensure,
   $service_manage = $rabbitmq::service_manage,
   $service_name   = $rabbitmq::service_name,
+  $rabbitmq_user   = $rabbitmq::rabbitmq_user,
 ) inherits rabbitmq {
 
   validate_re($service_ensure, '^(running|stopped)$')
@@ -30,7 +31,6 @@ class rabbitmq::service(
 
     $service_file_name = 'rabbitmq-server'
     $service_file      = "/etc/init.d/${service_file_name}"
-    $username          = 'rabbitmquser'
     $platform          = downcase($::osfamily)
 
     file { $service_file:
