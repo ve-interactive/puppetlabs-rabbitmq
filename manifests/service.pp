@@ -28,12 +28,26 @@ class rabbitmq::service(
       $enable_real = false
     }
 
-    service { 'rabbitmq-server':
+    $service_file_name = 'rabbitmq-server'
+    $service_file      = "/etc/init.d/${service_file_name}"
+    $username          = 'rabbitmquser'
+    $platform          = downcase($::osfamily)
+
+    file { $service_file:
+      ensure  => file,
+      content => template("rabbitmq/service.${platform}.erb"),
+      owner   => 'root',
+      group   => 'root',
+      mode    => 0755,
+    }
+
+    service { $service_file_name:
       ensure     => $ensure_real,
       enable     => $enable_real,
       hasstatus  => true,
       hasrestart => true,
       name       => $service_name,
+      require    => File[$service_file],
     }
   }
 
